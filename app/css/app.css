@@ -1,0 +1,32 @@
+/*util css start*/
+.pos-relative {
+    position: relative;
+}
+
+/*util css   end*/
+
+.todoList {
+    border: solid 1px #dfdfdf;
+    border-radius: 10px;
+    position: relative;
+    width: 60%;
+    margin-bottom: 10px;
+    left: 20%;
+    margin-top: 5px;
+}
+
+button#btn_todo_create {
+    position: absolute;
+    right: 1px;
+    top: 0px;
+}
+
+button.deleteBtn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#todo_display {
+    text-align: center;
+}

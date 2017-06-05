@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="app/css/app.css" rel="stylesheet">
+</head>
+<body>
+<main class="container">
+    <header class="text-center">
+        <h1>Task Manager</h1>
+    </header>
+    <section id="todo_create" class="pos-relative">
+        <form>
+            <div class="form-group">
+                <input id="todo_title" type="text" class="form-control" placeholder="Add a new todo list"/>
+                <button class="btn-primary btn" id="btn_todo_create">Create</button>
+            </div>
+        </form>
+    </section>
+    <section id="todo_display" class="">
+
+    </section>
+</main>
+<template id="newTodoList">
+    <section class="todoList">
+        <h3></h3>
+        <button class="btn-outline-danger deleteBtn">
+            X
+        </button>
+        <form class="p-2">
+            <input type="text" class="form-control" placeholder="Add a todo item"/>
+        </form>
+        <ul></ul>
+    </section>
+</template>
+<template id="newTodoItem">
+    <li class="todoItem"></li>
+</template>
+<script src="app/js/util.js"></script>
+<script src="app/js/store.js"></script>
+<script src="app/js/model.js"></script>
+<script src="app/js/view.js"></script>
+<script src="app/js/controller.js"></script>
+<script src="app/js/app.js"></script>
+</body>
+</html>
