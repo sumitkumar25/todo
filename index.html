@@ -29,14 +29,18 @@
         <button class="btn-outline-danger deleteBtn">
             X
         </button>
-        <form class="p-2">
-            <input type="text" class="form-control" placeholder="Add a todo item"/>
+        <form class="p-2" onclick="javascript:void(0)">
+            <input type="text" class="form-control addTodo" placeholder="Add a todo item"/>
         </form>
         <ul></ul>
     </section>
 </template>
 <template id="newTodoItem">
-    <li class="todoItem"></li>
+    <li class="todoItem">
+        <button class="btn-danger deleteItemBtn">
+            X
+        </button>
+    </li>
 </template>
 <script src="app/js/util.js"></script>
 <script src="app/js/store.js"></script>

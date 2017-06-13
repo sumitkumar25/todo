@@ -4,6 +4,13 @@
 }
 
 /*util css   end*/
+h3 {
+    display: block;
+}
+
+h3.editing {
+    display: none;
+}
 
 .todoList {
     border: solid 1px #dfdfdf;
@@ -29,4 +36,23 @@ button.deleteBtn {
 
 #todo_display {
     text-align: center;
+}
+
+ul {
+    list-style-type: decimal;
+}
+
+li {
+    text-align: left;
+    position: relative;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ddd;
+    min-height: 40px;
+    margin-right: 20px;
+}
+
+li .deleteItemBtn {
+    position: absolute;
+    right: 10px;
+    top: 0px;
 }
