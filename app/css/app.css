@@ -39,7 +39,7 @@ button.deleteBtn {
 }
 
 ul {
-    list-style-type: decimal;
+    list-style-type: none;
 }
 
 li {

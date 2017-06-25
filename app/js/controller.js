@@ -21,21 +21,27 @@
         self.view.bindEvents("deleteTodoList", function (id) {
             self.deleteTodoList(id)
         });
-        self.view.bindEvents("createTodoItem", function (title, listid) {
-            self.addNewTodoItem(title, listid);
-        })
+        self.view.bindEvents("createTodoItem", function (title, status, listid) {
+            self.addNewTodoItem(title, status, listid);
+        });
         self.view.bindEvents("deleteTodoItem", function (id, listid) {
             self.deleteTodoItem(id, listid);
-        })
+        });
         self.view.bindEvents("editTodoItem", function (title, id, listid) {
             self.editTodoItem(title, id, listid);
-        })
+        });
         self.view.bindEvents("editTodoItemFinish", function (title, id, listid) {
             self.editTodoItemFinish(title, id, listid);
-        })
+        });
         self.view.bindEvents("editTodoItemAbort", function () {
             self.showAll();
-        })
+        });
+        self.view.bindEvents("statusChangeTodoItem", function (status, todoid, listid) {
+            self.statusChangeTodoItem(status, todoid, listid);
+        });
+        self.view.bindEvents("filterChange", function (param, listId) {
+            self.filter(param, listId);
+        });
     }
 
     Controller.prototype.initialize = function () {
@@ -58,9 +64,9 @@
         var self = this;
         self.view.editTodoListItem(id, title);
     }
-    Controller.prototype.addNewTodoItem = function (title, listId) {
+    Controller.prototype.addNewTodoItem = function (title, status, listId) {
         var self = this;
-        self.model.addNewTodoItem(title, listId, function () {
+        self.model.addNewTodoItem(title, status, listId, function () {
             self.showAll();
         });
     }
@@ -96,6 +102,18 @@
             self.showAll();
             // clear todolist generator.
         })
+    }
+    Controller.prototype.statusChangeTodoItem = function (status, todoid, listid) {
+        var self = this;
+        self.model.statusChangeTodoItem(status, todoid, listid, function () {
+            self.showAll();
+        })
+    }
+    Controller.prototype.filter = function (filterParam, listId) {
+        var self = this;
+        //we have only ui filter no need to read from db
+        //routing through controller for any future addition
+        self.view.filterUpdate(filterParam, listId);
     }
     // Export to window
     window.app = window.app || {};

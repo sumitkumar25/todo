@@ -54,7 +54,7 @@
             window.delegateEvent(self._todoList_display, ".addTodo", "keypress", function (e) {
                 if (e.which == self._ENTER_SAVE || e.keyCode == self._ENTER_SAVE) {
                     this.blur();
-                    callback(this.value, window.parent(this, "section").id);
+                    callback(this.value, false, window.parent(this, "section").id);
                 }
             });
         }
@@ -78,28 +78,70 @@
             })
         }
         if (event == "editTodoItemFinish") {
-            window.delegateEvent(self._todoList_display, "li input", "keypress", function (e) {
+            window.delegateEvent(self._todoList_display, "li input[type=text]", "keypress", function (e) {
                 if (e.which == self._ENTER_SAVE || e.keyCode == self._ENTER_SAVE) {
                     this.blur();
                     callback(e.target.value, window.parent(e.target, 'li').id, self.getParentListId(e));
                 }
             });
         }
+        if (event == "statusChangeTodoItem") {
+            window.delegateEvent(self._todoList_display, "li input[type=checkbox]", "change", function (e) {
+                callback(e.target.checked, window.parent(e.target, 'li').id, self.getParentListId(e));
+            });
+        }
+        if (event == "filterChange") {
+            /*            window.addEventListener("hashchange", function (e) {
+             callback(e.newURL.split("#/")[1], self.getParentListId(e))
+             });*/
+            window.delegateEvent(self._todoList_display, ".filter", "click", function (e) {
+                callback(this.href.split("#/")[1], self.getParentListId(e));
+            });
+        }
     }
-    View.prototype.render = function (data) {
-        //rendering all
-        var keys = Object.keys(data);
-        this._todoList_display.innerHTML = '';
-        for (var key in keys) {
-            var dataKey = keys[key];
-            var isList = document.getElementById("#" + dataKey);
-            if (isList && isList.length) {
-
-            } else {
-                this.renderNewTodoList(data[dataKey], dataKey)
+    View.prototype.filterUpdate = function (filter, listId) {
+        var listItems = window.qsa("li", document.getElementById(listId));
+        if (filter.toLowerCase() == "completed") {
+            for (var i = 0; i < listItems.length; i++) {
+                var item = listItems[i];
+                if (!qs('input[type=checkbox]', item).checked) {
+                    item.style.display = 'none';
+                } else {
+                    item.style.display = 'block';
+                }
+            }
+        } else if (filter.toLowerCase() == "pending") {
+            for (var i = 0; i < listItems.length; i++) {
+                var item = listItems[i];
+                if (qs('input[type=checkbox]', item).checked) {
+                    item.style.display = 'none';
+                } else {
+                    item.style.display = 'block';
+                }
+            }
+        } else {
+            for (var i = 0; i < listItems.length; i++) {
+                listItems[i].style.display = "block";
             }
         }
+    }
+    View.prototype.render = function (data, listId) {
+        //rendering all
+        var keys = Object.keys(data);
+        if (listId) {
 
+        } else {
+            this._todoList_display.innerHTML = '';
+            for (var key in keys) {
+                var dataKey = keys[key];
+                var isList = document.getElementById("#" + dataKey);
+                if (isList && isList.length) {
+
+                } else {
+                    this.renderNewTodoList(data[dataKey], dataKey)
+                }
+            }
+        }
     }
     View.prototype.removeTodoList = function (id) {
         var elem = document.getElementById(id);
@@ -144,6 +186,7 @@
             if (data[i]) {
                 var newItem = window.qsa("." + this._classTodoItem, this._template_todoItem.content)[0].cloneNode(true);
                 //newItem.innerHTML = '';
+                qs("input[type='checkbox']", newItem).checked = data[i].status;
                 newItem.appendChild(document.createTextNode(data[i].title));
                 newItem.id = data[i].id;
                 window.qs('ul', newListSection).appendChild(newItem);

@@ -6,13 +6,13 @@
         this.store = store
     }
 
-    Model.prototype.addNewTodoItem = function (title, listId, callback) {
+    Model.prototype.addNewTodoItem = function (title, status, listId, callback) {
         if (!title.trim()) {
             console.log("todo item not available to save");
             alert("unable to save new todoitem check console for more info");
         }
         else {
-            this.store._addNewTodoItem(title, listId, callback);
+            this.store._addNewTodoItem(title, status, listId, callback);
         }
     }
     Model.prototype.addNewTodoList = function (title, callback) {
@@ -43,6 +43,9 @@
     }
     Model.prototype.editTodoItem = function (title, id, listId, callback) {
         this.store._editItem(title, id, listId, callback);
+    }
+    Model.prototype.statusChangeTodoItem = function (status, todoId, listId, callback) {
+        this.store._editStatus(status, todoId, listId, callback);
     }
     window.app = window.app || {};
     window.app.Model = Model;

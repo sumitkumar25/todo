@@ -15,17 +15,18 @@
         this.title = title;
         this.todo = [];
     }
-    Store.prototype.newTodoItem = function (title) {
+    Store.prototype.newTodoItem = function (title, status) {
         this.title = new String(title).trim();
-        this.id = "item_" + new Date().getTime()
+        this.id = "item_" + new Date().getTime();
+        this.status = status || false;
     }
     /**
      * Todo items fn's start*/
-    Store.prototype._addNewTodoItem = function (title, listId, callback, id) {
+    Store.prototype._addNewTodoItem = function (title, status, listId, callback, id) {
         if (!title || !listId) {
             return;
         }
-        var todoItem = new this.newTodoItem(title);
+        var todoItem = new this.newTodoItem(title, status);
         /*        if (!id) {
          id = new Date().getTime();
          id = "item_" + id;
@@ -35,6 +36,7 @@
         var listData = appData[listId]["todo"];
         listData.push(todoItem);
         localStorage[this.db_name] = JSON.stringify(appData);
+        console.log("this in _addNewTodoItem\n" + this);
         callback.call();
     }
     /**
@@ -92,6 +94,18 @@
         for (var i = 0; i < listData.length; i++) {
             if (listData[i].id == id) {
                 listData[i].title = title;
+                break;
+            }
+        }
+        localStorage[this.db_name] = JSON.stringify(appData);
+        callback.call();
+    }
+    Store.prototype._editStatus = function (status, todoId, listId, callback) {
+        var appData = JSON.parse(localStorage[this.db_name]);
+        var listData = appData[listId].todo;
+        for (var i = 0; i < listData.length; i++) {
+            if (listData[i].id == todoId) {
+                listData[i].status = status;
                 break;
             }
         }

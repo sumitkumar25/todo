@@ -32,11 +32,18 @@
         <form class="p-2" onclick="javascript:void(0)">
             <input type="text" class="form-control addTodo" placeholder="Add a todo item"/>
         </form>
+        <div>
+            <a href="#/all" class="filter">All</a>
+            <a href="#/completed" class="filter">completed</a>
+            <a href="#/pending" class="filter">Pending</a>
+        </div>
         <ul></ul>
     </section>
+    <section></section>
 </template>
 <template id="newTodoItem">
     <li class="todoItem">
+        <input type="checkbox" name="complete"/>
         <button class="btn-danger deleteItemBtn">
             X
         </button>
